@@ -1,7 +1,28 @@
+using Microsoft.EntityFrameworkCore;
+using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
+// Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    string connectString = builder.Configuration.GetConnectionString("MyCnn");
+    options.UseSqlServer(connectString);
+
+});
+
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddOptions();
+
+
+
+
+
+
+
 
 var app = builder.Build();
 

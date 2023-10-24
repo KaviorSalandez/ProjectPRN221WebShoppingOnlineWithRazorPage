@@ -46,7 +46,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\" />
     <Folder Include="Areas\Identity\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
