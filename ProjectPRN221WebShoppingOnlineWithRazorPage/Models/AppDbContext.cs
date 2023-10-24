@@ -26,5 +26,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
                 }
             }
         }
+        public DbSet<Category> Categories { get; set; }
+
     }
 }
