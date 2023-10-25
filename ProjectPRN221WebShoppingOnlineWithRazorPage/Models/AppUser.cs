@@ -14,5 +14,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
 
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
+
+        public string? Avatar { get;set; }
     }
 }

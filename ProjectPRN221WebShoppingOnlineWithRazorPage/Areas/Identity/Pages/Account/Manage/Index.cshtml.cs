@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,6 +14,7 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
@@ -26,35 +28,28 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+       
         public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+       
         [TempData]
         public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+       
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+       
         public class InputModel
         {
-            [Phone]
+            [Phone(ErrorMessage ="{0} sai định dạng")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "Địa chỉ")]
+            [StringLength(500)]
+            public string HomeAddress { get; set; }
+            [Display(Name = "Ngày sinh")]
+            public DateTime? BirthDate { get; set; }
         }
 
         private async Task LoadAsync(AppUser user)
@@ -66,7 +61,10 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                HomeAddress = user.HomeAddress,
+                BirthDate = user.BirthDate,
+
             };
         }
 
@@ -96,16 +94,23 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //if (Input.PhoneNumber != phoneNumber)
+            //{
+            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            //    if (!setPhoneResult.Succeeded)
+            //    {
+            //        StatusMessage = "Unexpected error when trying to set phone number.";
+            //        return RedirectToPage();
+            //    }
+            //}
+            user.HomeAddress = Input.HomeAddress;
+            user.BirthDate = Input.BirthDate;
+            user.PhoneNumber = Input.PhoneNumber;
+
+           await _userManager.UpdateAsync(user);
+            // nạp lại thông itn mới
+            await _signInManager.RefreshSignInAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

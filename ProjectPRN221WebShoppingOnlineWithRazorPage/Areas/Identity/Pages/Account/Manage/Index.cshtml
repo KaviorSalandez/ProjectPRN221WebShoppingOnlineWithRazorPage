@@ -20,6 +20,16 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-floating">
+                <label asp-for="Input.HomeAddress" class="form-label"></label>
+                <textarea asp-for="Input.HomeAddress" class="form-control" ></textarea>
+                <span asp-validation-for="Input.HomeAddress" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="Input.BirthDate" class="form-label"></label>
+                <input asp-for="Input.BirthDate" class="form-control" />
+                <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            </div>
             <br />
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
