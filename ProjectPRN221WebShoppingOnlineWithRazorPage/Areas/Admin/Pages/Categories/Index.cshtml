@@ -1,0 +1,30 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Categories.IndexModel
+@{
+}
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card">
+   
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">List of category</h5>
+        <a asp-page="upsert" class="btn btn-sm btn-primary"> <i class="bi bi-plus-square-fill"></i> Create</a>
+    </div>
+
+    <div class="card-body">
+        <table id="DT_load" class="table table-bordered table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Icon</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/category.js"></script>
+}

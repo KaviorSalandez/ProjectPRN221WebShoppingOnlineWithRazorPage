@@ -1,0 +1,20 @@
+﻿@model string
+
+@if (!String.IsNullOrEmpty(Model))
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            closeButton: true,      // Hiển thị nút đóng
+            debug: false,           // Chế độ gỡ lỗi
+            positionClass: 'toast-top-right', // Vị trí hiển thị Toast
+            showDuration: 300,      // Thời gian hiển thị
+            hideDuration: 1000,     // Thời gian ẩn đi
+            timeOut: 5000,          // Thời gian tự động đóng Toast
+            extendedTimeOut: 1000,  // Thời gian bổ sung nếu người dùng di chuyển chuột qua Toast
+            progressBar: true,      // Hiển thị thanh tiến trình
+        };
+        toastr.success('@Model', 'Thông báo');
+    </script>
+}

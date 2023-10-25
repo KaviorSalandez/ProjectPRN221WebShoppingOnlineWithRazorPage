@@ -1,0 +1,47 @@
+﻿@{
+        Layout = "/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">Change setting of profile</h5>
+    </div>
+
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-md-3">
+                    <partial name="_ManageNav" />
+                </div>
+                <div class="col-md-9">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

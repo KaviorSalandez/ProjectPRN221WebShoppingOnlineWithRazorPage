@@ -45,10 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\User\" />
-    <Folder Include="Areas\Admin\Pages\Role\" />
-    <Folder Include="Areas\Identity\" />
+    <Folder Include="Areas\Admin\Pages\Users\" />
+    <Folder Include="Areas\Admin\Pages\Roles\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\images\category\" />
   </ItemGroup>
 
 </Project>

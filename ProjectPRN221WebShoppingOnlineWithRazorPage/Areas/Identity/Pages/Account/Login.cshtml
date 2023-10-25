@@ -1,0 +1,85 @@
+﻿@page "/admin/login"
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<div class="card ">
+    <div class="card-header text-center"><a href="../index.html"><img class="logo-img" src="~/assets/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+    <div class="card-body">
+        <section>
+            <form id="account" method="post">
+                
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="Input.UserNameOrEmail" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Username or email" />
+                    <span asp-validation-for="Input.UserNameOrEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Input.Password" class=" form-control form-control-lg" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input asp-for="Input.RememberMe" class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="card-footer bg-white p-0  ">
+        <div class="card-footer-item card-footer-item-bordered">
+            <a asp-page="./Register" class="footer-link">Create An Account</a>
+        </div>
+        <div class="card-footer-item card-footer-item-bordered">
+            <a asp-page="./ForgotPassword" class="footer-link">Forgot Password</a>
+        </div>
+    </div>
+</div>
+
+
+@* <div class="row">
+    <div class="col-md-4">
+      
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                            about setting up this ASP.NET application to support logging in via external services</a>.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div> *@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

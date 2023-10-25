@@ -1,0 +1,86 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Categories.UpSertModel
+@{
+}
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="text-primary"> @(Model.Category.Id != 0 ? "Update " : "Create ") a category</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <input asp-for="Category.Id" hidden />
+                <div class="row">
+                    <div class="col-9">
+                        <div asp-validation-summary="All"></div>
+                        <div class="mb-3">
+                            <label asp-for="Category.Name"></label>
+                            <input asp-for="Category.Name" class="form-control" />
+                            <span asp-validation-for="Category.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Category.Description"></label>
+                            <textarea asp-for="Category.Description" class="form-control"></textarea>
+                            <span asp-validation-for="Category.Description" class="text-danger"></span>
+                        </div>
+                       
+                        <div class="mb-3">
+                            <label asp-for="Category.Icon"></label>
+                            <input type="file" name="files" id="uploadBox" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        @if (Model.Category.Id != 0)
+                        {
+                            <img width="100%" style="border-radius:5px;border:1px solid #bbb9b9" src="@Model.Category.Icon" />
+                        }
+                    </div>
+                </div>
+                @if (Model.Category.Id != 0)
+                {
+                    <button type="submit" class="btn btn-sm btn-warning style="width:150px;">Update</button>
+                }
+                else
+                {
+                    <button onclick="return ValidateInput()" type="submit" class="btn btn-sm btn-success" >Create</button>
+                }
+                <a asp-page="./Index" class="btn btn-sm btn-secondary">Back to list</a>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+        });
+
+        function ValidateInput() {
+            var valueOfImageBox = document.getElementById("uploadBox").value;
+            if (valueOfImageBox == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload an Image!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                });
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
