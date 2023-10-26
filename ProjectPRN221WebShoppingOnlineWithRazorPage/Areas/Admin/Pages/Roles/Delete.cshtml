@@ -1,0 +1,48 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles.DeleteModel
+@{
+}
+
+
+
+
+
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card" style="min-height:500px">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">Delete role</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p>Bạn có chắc chắn xóa role có tên là <strong>@Model.role.Name</strong></p>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Đồng ý" class="btn btn-danger btn-sm" />
+                <a asp-page="./Index" class="btn btn-sm btn-primary">Quay lại danh sách role</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

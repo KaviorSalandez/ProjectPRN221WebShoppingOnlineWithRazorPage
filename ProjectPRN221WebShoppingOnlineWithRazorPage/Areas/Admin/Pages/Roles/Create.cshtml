@@ -1,0 +1,33 @@
+﻿@page "/admin/add-role"
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles.CreateModel
+@{
+}
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card" style="min-height:500px">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">Create new role</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Name" class="control-label"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Tạo mới" class="btn btn-primary btn-sm" />
+                <a asp-page="./Index" class="btn btn-sm btn-primary">Quay lại danh sách role</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

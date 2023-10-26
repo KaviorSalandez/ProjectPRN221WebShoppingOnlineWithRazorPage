@@ -1,0 +1,42 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles.IndexModel
+@{
+}
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card" style="min-height:500px">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">List of role</h5>
+        <div class="d-flex">
+            <a style="margin-right:2px" class="btn btn-sm btn-success" asp-page="./Create">Tạo role mới</a>
+            <a class="btn btn-sm btn-secondary" asp-page="../Users/Index">Quản lí thành viên</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>Tên role (vai trò)</th>
+
+                <th>Tác vụ</th>
+            </tr>
+            @foreach (var role in Model.roles)
+            {
+                <tr>
+                    <td>
+                        <p>@role.Name</p>
+                        @foreach (var claim in role.Claims)
+                        {
+                            <small>@claim</small>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" asp-page="./Edit" asp-route-roleid="@role.Id">Cập nhật</a>
+                        <a class="btn btn-sm btn-danger" asp-page="./Delete" asp-route-roleid="@role.Id">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

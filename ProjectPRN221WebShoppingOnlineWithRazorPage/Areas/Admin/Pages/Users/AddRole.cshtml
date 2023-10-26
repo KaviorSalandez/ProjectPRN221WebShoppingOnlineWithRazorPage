@@ -1,0 +1,49 @@
+﻿@page "/admin/assign-user-role/{id}"
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.User.AddRoleModel
+@{
+    ViewData["Title"] = "Gán role cho user";
+}
+
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card" style="min-height:500px">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">Thiết lập mật khẩu cho thành viên: @Model.user.UserName</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="RoleNamesOfUser" class="form-label"></label>
+                @Html.ListBoxFor(m=>m.RoleNamesOfUser, Model.allRoles, new {id ="id-select-role",@class="w-100"})
+                <span asp-validation-for="RoleNamesOfUser" class="text-danger"></span>
+            </div>
+            <br />
+
+            <button type="submit" class=" btn btn-sm btn-success">Cập nhật</button>
+            <a asp-page="./Index" class=" btn btn-sm btn-secondary">Danh sách các thành viên</a>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+   
+    @* Đế trực quan hơn ta dùng multi-select *@
+    <link href="~/assets/vendor/multi-select/css/multi-select.css" rel="stylesheet" />
+    <script src="~/assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("#id-select-role").multiSelect({
+            selectAll: true,
+            keepOpen: false,
+            isOpen: false,
+            animate: 'slide',
+            filter: true,
+        })
+    </script>
+}
+
+

@@ -45,8 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\Users\" />
-    <Folder Include="Areas\Admin\Pages\Roles\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\category\" />
   </ItemGroup>
