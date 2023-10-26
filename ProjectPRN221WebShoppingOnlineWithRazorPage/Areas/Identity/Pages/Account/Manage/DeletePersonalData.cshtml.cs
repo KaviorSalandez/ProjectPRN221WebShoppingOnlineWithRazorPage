@@ -98,7 +98,10 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
 
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
-            return Redirect("~/");
+          //  return Redirect("/admin/login");
+
+            //chuyển hướng đến trang login
+            return LocalRedirect(Url.Content("~/admin/login"));
         }
     }
 }
