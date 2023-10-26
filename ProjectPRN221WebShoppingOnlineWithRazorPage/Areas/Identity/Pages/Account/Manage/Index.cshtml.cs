@@ -17,18 +17,21 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
     [Authorize]
     public class IndexModel : PageModel
     {
+        private readonly IWebHostEnvironment _environment;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
         public IndexModel(
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
+            IWebHostEnvironment environment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _environment = environment;
         }
 
-       
+
         public string Username { get; set; }
 
        
@@ -50,6 +53,8 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
             public string HomeAddress { get; set; }
             [Display(Name = "Ngày sinh")]
             public DateTime? BirthDate { get; set; }
+
+            public string? Avatar { get; set; }
         }
 
         private async Task LoadAsync(AppUser user)
@@ -64,7 +69,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
                 PhoneNumber = phoneNumber,
                 HomeAddress = user.HomeAddress,
                 BirthDate = user.BirthDate,
-
+                Avatar = user.Avatar
             };
         }
 
@@ -94,21 +99,36 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Identity.Pages.Accou
                 return Page();
             }
 
-            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            //if (Input.PhoneNumber != phoneNumber)
-            //{
-            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-            //    if (!setPhoneResult.Succeeded)
-            //    {
-            //        StatusMessage = "Unexpected error when trying to set phone number.";
-            //        return RedirectToPage();
-            //    }
-            //}
+            
             user.HomeAddress = Input.HomeAddress;
             user.BirthDate = Input.BirthDate;
             user.PhoneNumber = Input.PhoneNumber;
 
-           await _userManager.UpdateAsync(user);
+            // cập nhật ảnh cho user
+            string webRootPath = _environment.WebRootPath;
+            var file = HttpContext.Request.Form.Files;
+            if (file.Count > 0)
+            {
+
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(file[0].FileName);
+                string fileName_new = Guid.NewGuid().ToString() + "_" + fileName;
+                var uploads = Path.Combine(webRootPath, @"images\users");
+                var extension = Path.GetExtension(file[0].FileName);
+
+                // trước khi cập nhật cần xóa ảnh cũ đi ->th này ko cần vì ảnh default cần dùng cho những register khác
+               
+                // new upload
+                //sao chép file vào folder
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName_new + extension), FileMode.Create))
+                {
+                    //sao chép vào vị trí mà chúng ta đã xác định trong our file stream
+                    file[0].CopyTo(fileStream);
+                }
+                user.Avatar = @"\images\users\" + fileName_new + extension;
+            }
+            
+
+            await _userManager.UpdateAsync(user);
             // nạp lại thông itn mới
             await _signInManager.RefreshSignInAsync(user);
 

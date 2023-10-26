@@ -138,8 +138,21 @@
                         
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            var user = await UserManager.GetUserAsync(User);
+                            var avatar = "";
+                            if (user != null)
+                            {
+                                avatar = user.Avatar;
+                            }
+
                             <li class="nav-item dropdown nav-user">
-                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/assets/images/310535073_1440580556479924_567223785010182623_n.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                                @if(avatar != null)
+                                {
+                                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="@avatar" alt="" class="user-avatar-md rounded-circle"></a>
+                                }else{
+                                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/images/default/defaultavatar.png" alt="" class="user-avatar-md rounded-circle"></a>
+
+                                }
                                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <div class="nav-user-info">
                                         <h5 class="mb-0 text-white nav-user-name">Xin chào @UserManager.GetUserName(User)</h5>
