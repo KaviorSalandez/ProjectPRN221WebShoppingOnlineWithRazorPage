@@ -1,0 +1,255 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products.CreateModel
+@{
+}
+
+<partial name="_Notification" model=@Model.StatusMessage />
+
+
+
+
+<div class="tab-regular">
+    <ul class="nav nav-tabs " id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin sản phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ảnh sản phẩm</a>
+        </li>
+    </ul>
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label asp-for="Product.Title"></label>
+                            <input asp-for="Product.Title" class="form-control" />
+                            <span asp-validation-for="Product.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Product.Description"></label>
+                            <textarea id="summernote" asp-for="Product.Description" class="form-control"></textarea>
+                            <span asp-validation-for="Product.Description" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label asp-for="Product.ProductCode"></label>
+                            <input asp-for="Product.ProductCode" class="form-control" />
+                            <span asp-validation-for="Product.ProductCode" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Product.Detail"></label>
+                            <textarea id="summernote1" asp-for="Product.Detail" class="form-control"></textarea>
+                            <span asp-validation-for="Product.Detail" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.Quantity"></label>
+                            <input asp-for="Product.Quantity" class="form-control" value="0" />
+                            <span asp-validation-for="Product.Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.OriginalPrice"></label>
+                            <input asp-for="Product.OriginalPrice" class="form-control" value="0" />
+                            <span asp-validation-for="Product.OriginalPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.Price"></label>
+                            <input asp-for="Product.Price" class="form-control" value="0" />
+                            <span asp-validation-for="Product.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.PriceSale"></label>
+                            <input asp-for="Product.PriceSale" class="form-control" value="0" />
+                            <span asp-validation-for="Product.PriceSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.CategoryId"></label>
+                            <select asp-items="Model.Categories" asp-for="Product.CategoryId" class="form-control"></select>
+                            <span asp-validation-for="Product.PriceSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsActive"></label>
+                            <input asp-for="Product.IsActive" />
+                            <span asp-validation-for="Product.IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsHome"></label>
+                            <input asp-for="Product.IsHome" />
+                            <span asp-validation-for="Product.IsHome" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsFeature"></label>
+                            <input asp-for="Product.IsFeature" />
+                            <span asp-validation-for="Product.IsFeature" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsSale"></label>
+                            <input asp-for="Product.IsSale" />
+                            <span asp-validation-for="Product.IsSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-sm btn-success">Create</button>
+                <a class="btn btn-sm btn-secondary" asp-page="./Index">Back to list</a>
+            </div>
+
+
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <h3>Các ảnh của sản phẩm</h3>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <input type="button" id="TaiAnh" class="btn btn-sm btn-success" onclick="Browsever()" value="Tải ảnh" />
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped mb-5">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ảnh</th>
+                            <th>Ảnh đại diện</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="tbHTML">
+                        <input type="hidden" id="tCurrentId" value="0" />
+                    </tbody>
+                </table>
+
+                <button type="submit" class="btn btn-sm btn-success">Create</button>
+                <a class="btn btn-sm btn-secondary" asp-page="./Index">Back to list</a>
+            </div>
+
+        </div>
+    </form>
+
+
+
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/summernote_ckfinder.js"></script>
+
+    <script>
+        function Browsever(field) {
+            var finder = $('<div />').dialogelfinder({
+                url: '/el-finder-file-system/connector',
+                baseUrl: "/lib/elfinder/",
+                lang: 'vi',
+                width: 840,
+                height: 450,
+                destroyOnClose: true,
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                },
+                getFileCallback: function (file) {
+                    var fileUrl = file.url;
+                    addImageProduct(fileUrl);
+                }
+            }).dialogelfinder('instance');
+        }
+        //xóa
+        // lấy ra id của hàng cần xóa
+        $('body').on('click', '.btnXoaAnh', function () {
+            var conf = confirm('Bạn có muốn xóa bản ghi này không ?');
+            if (conf === true) {
+                var _id = $(this).data('id');
+                $('#trow_' + _id).fadeTo('fast', 1, function () {
+                    $(this).slideUp('fast', function () { $(this).remove(); })
+                });
+                //sau khi xóa cập nhật lại thứ tự
+                var temp = $('#tCurrentId').val();
+                var currentId = parseInt(temp) - 1;
+                $('#tCurrentId').val(currentId);
+            }
+
+        });
+        function addImageProduct(url) {
+            var temp = $('#tCurrentId').val();
+            var currentId = parseInt(temp) + 1;
+            var str = "";
+            if (currentId == 1) {
+                //cộng chuỗi
+                str = `<tr id="trow_${currentId}">
+                                         <td class="text-center">${currentId}</td>
+                                         <td class="text-center"><img src="${url}"  width="100px" height="100px"/><input type="hidden" name="Images" value="${url}"/></td>
+                                         <td class="text-center">
+                                                  <label class="custom-control custom-radio custom-control-inline" >
+                                                            <input type="radio" name="radioDefault" value=${currentId} checked="checked" class="custom-control-input"/>
+                                                            <span class="custom-control-label"></span> 
+                                                   </label>
+                                         </td>
+                                         <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                     </tr>`;
+            }
+            else {
+                str = `<tr id="trow_${currentId}">
+                                         <td class="text-center">${currentId}</td>
+                                         <td class="text-center"><img src="${url}"  width="100px" height="100px"/><input type="hidden" name="Images" value="${url}"/></td>
+                                        
+                                             <td class="text-center">
+                                                 <label class="custom-control custom-radio custom-control-inline" >
+                                                     <input type="radio" name="radioDefault" value=${currentId} class="custom-control-input"/>
+                                                     <span class="custom-control-label"></span>
+                                                    </label>
+                                            </td>
+                                         <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                     </tr>`;
+            }
+            //gen ra bảng
+            $('#tbHTML').append(str);
+            $('#tCurrentId').val(currentId);
+
+        
+
+        }
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }
+

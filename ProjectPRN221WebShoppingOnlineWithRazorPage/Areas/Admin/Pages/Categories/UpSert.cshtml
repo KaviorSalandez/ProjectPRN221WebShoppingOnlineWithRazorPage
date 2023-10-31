@@ -22,7 +22,7 @@
 
                         <div class="mb-3">
                             <label asp-for="Category.Description"></label>
-                            <textarea asp-for="Category.Description" class="form-control"></textarea>
+                            <textarea id="summernote" asp-for="Category.Description" class="form-control"></textarea>
                             <span asp-validation-for="Category.Description" class="text-danger"></span>
                         </div>
                        
@@ -40,7 +40,7 @@
                 </div>
                 @if (Model.Category.Id != 0)
                 {
-                    <button type="submit" class="btn btn-sm btn-warning style="width:150px;">Update</button>
+                    <button type="submit" class="btn btn-sm btn-warning" style="width:150px;">Update</button>
                 }
                 else
                 {
@@ -51,19 +51,11 @@
     </div>
 </div>
 @section Scripts {
+    <script src="~/js/summernote_ckfinder.js"></script>
     <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-            ],
-            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
-        });
+
+
+
 
         function ValidateInput() {
             var valueOfImageBox = document.getElementById("uploadBox").value;

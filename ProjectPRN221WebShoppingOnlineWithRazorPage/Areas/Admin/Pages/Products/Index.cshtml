@@ -1,0 +1,38 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products.IndexModel
+@{
+}
+<partial name="_Notification" model=@Model.StatusMessage />
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">List of products</h5>
+        <a asp-page="./Create" class="btn btn-sm btn-primary"> <i class="bi bi-plus-square-fill"></i> Create</a>
+    </div>
+
+    <div class="card-body">
+        <table id="DT_load" class="table table-bordered table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ProductCode</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>IsActive</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+
+    <div id="dialog">
+        <iframe id="myIframe" style="border:0 ;width: 100%; height: 100%"></iframe>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

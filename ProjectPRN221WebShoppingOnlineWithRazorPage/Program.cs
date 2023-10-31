@@ -4,6 +4,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -70,6 +71,7 @@ builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddOptions();
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 
 
@@ -90,6 +92,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// /contents/a1.jpg => Uploads/a1.jpg
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(),"Uploads")
+        ),
+    RequestPath = "/contents"
+});
 
 app.UseRouting();
 app.UseAuthentication();;

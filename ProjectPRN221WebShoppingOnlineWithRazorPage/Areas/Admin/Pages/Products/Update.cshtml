@@ -1,0 +1,155 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products.UpdateModel
+@{
+}
+
+<partial name="_Notification" model=@Model.StatusMessage />
+
+
+
+
+<div class="tab-regular">
+    <ul class="nav nav-tabs " id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin sản phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ảnh sản phẩm</a>
+        </li>
+    </ul>
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-6">
+                        <input asp-for="Product.Id" type="hidden" />
+                        <div class="mb-3">
+                            <label asp-for="Product.Title"></label>
+                            <input asp-for="Product.Title" class="form-control" />
+                            <span asp-validation-for="Product.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Product.Description"></label>
+                            <textarea id="summernote" asp-for="Product.Description" class="form-control"></textarea>
+                            <span asp-validation-for="Product.Description" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label asp-for="Product.ProductCode"></label>
+                            <input asp-for="Product.ProductCode" class="form-control" />
+                            <span asp-validation-for="Product.ProductCode" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Product.Detail"></label>
+                            <textarea id="summernote1" asp-for="Product.Detail" class="form-control"></textarea>
+                            <span asp-validation-for="Product.Detail" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.Quantity"></label>
+                            <input asp-for="Product.Quantity" class="form-control"  />
+                            <span asp-validation-for="Product.Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.OriginalPrice"></label>
+                            <input asp-for="Product.OriginalPrice" class="form-control"  />
+                            <span asp-validation-for="Product.OriginalPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.Price"></label>
+                            <input asp-for="Product.Price" class="form-control" />
+                            <span asp-validation-for="Product.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.PriceSale"></label>
+                            <input asp-for="Product.PriceSale" class="form-control"  />
+                            <span asp-validation-for="Product.PriceSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.CategoryId"></label>
+                            <select asp-items="Model.Categories" asp-for="Product.CategoryId" class="form-control"></select>
+                            <span asp-validation-for="Product.PriceSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsActive"></label>
+                            <input asp-for="Product.IsActive" />
+                            <span asp-validation-for="Product.IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsHome"></label>
+                            <input asp-for="Product.IsHome" />
+                            <span asp-validation-for="Product.IsHome" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsFeature"></label>
+                            <input asp-for="Product.IsFeature" />
+                            <span asp-validation-for="Product.IsFeature" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label asp-for="Product.IsSale"></label>
+                            <input asp-for="Product.IsSale" />
+                            <span asp-validation-for="Product.IsSale" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-sm btn-success">Update</button>
+                <a class="btn btn-sm btn-secondary" asp-page="./Index">Back to list</a>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <h3>Ảnh hiển thị của sản phẩm</h3>
+                    </div>
+                    <div>
+                        @if(Model.Product.Image != null)
+                        {
+                            <img src="@Model.Product.Image" alt="Product Image" style="width: 400px; height: 400px;" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/summernote_ckfinder.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

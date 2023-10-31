@@ -22,6 +22,12 @@
     <link rel="stylesheet" href="~/assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="~/assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
 
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/theme.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+    <link href="~/lib/summernote/summernote-bs4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/elfinder/css/elfinder.full.css" />
+    <link rel="stylesheet" href="~/lib/elfinder/css/theme.min.css" />
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -243,7 +249,7 @@
                                             <div id="submenu-12-2" class="collapse submenu" style="">
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="index.html">Hình ảnh</a>
+                                                        <a class="nav-link" asp-area="Admin" asp-page="/Products/Index">Sản phẩm</a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="ecommerce-product.html">Giá</a>
@@ -556,10 +562,14 @@
     <script src="~/assets/vendor/charts/c3charts/C3chartjs.js"></script>
     <script src="~/assets/libs/js/dashboard-ecommerce.js"></script>
 
-    <script src="https://cdn.tiny.cloud/1/76gi9016qlfwmn8jiijfloc974a5ofre3p85pckmsmk0sj3y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>></script>
+
+    <script src="https://cdn.tiny.cloud/1/76gi9016qlfwmn8jiijfloc974a5ofre3p85pckmsmk0sj3y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/elfinder/js/elfinder.min.js"></script>
+    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

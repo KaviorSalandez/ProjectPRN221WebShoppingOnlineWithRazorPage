@@ -1,0 +1,185 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductImages.IndexModel
+@{
+    Layout = "_LayoutEmpty";
+}
+
+
+<style>
+    .galeryImage {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .galeryImage li {
+            display: inline-block;
+            position: relative;
+        }
+
+    .box-btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+
+
+@Html.AntiForgeryToken()
+<div class="container">
+    <!-- Add the "Upload Image" button in the top-right corner -->
+    <div class="d-flex justify-content-end mb-3">
+        <input type="button" id="TaiAnh" class="btn btn-sm btn-success" onclick="Browsever()" value="Tải ảnh" />
+    </div>
+    <div class="row">
+        @foreach (var image in Model.ListProduct)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@image.Image" class="card-img-top" alt="Product Image" width="160px" height="160px">
+                    <div class="card-body">
+
+                        @if (image.IsDefault)
+                        {
+                            <a href="#" data-id="@image.Id" class="btn btn-sm btn-success"><i class="bi bi-check2-circle"></i></a>
+                        }
+                        else
+                        {
+                            <a href="#" data-id="@image.Id" class="btn btn-sm btn-warning btnDefault"><i class="bi bi-twitter-x"></i></a>
+                        }
+                        <a href="#" data-id="@image.Id" class="btn btn-sm btn-danger btnDelete"><i class="bi bi-trash3"></i></a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+
+
+
+@section Scripts{
+    <script src="~/js/summernote_ckfinder.js"></script>
+
+
+
+    <script>
+        $(".btnDelete").click(function () {
+            //xóa
+            // lấy ra id của hàng cần xóa
+            var id = $(this).data('id');
+            var conf = confirm('Bạn có muốn xóa bản ghi này không ?');
+            if (conf === true) {
+                // call ajax
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    url: '/Admin/ProductImages/Index?handler=DeleteImage',
+                    data: { id: id },
+                    success: function (rs) {
+                        console.log(rs);
+                        if (rs.success) {
+                            console.log("Good");
+                            window.location.reload();
+                        } else {
+                            console.log("Fail");
+                        }
+                    }
+                });
+            }
+        });
+
+        $(".btnDefault").click(function () {
+            var id = $(this).data('id');
+            var conf = confirm('Bạn có muốn cho ảnh này làm ảnh mặc định không ?');
+            if (conf === true) {
+                // call ajax
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    url: '/Admin/ProductImages/Index?handler=ChangeImageDefault',
+                    data: { id: id },
+                    success: function (rs) {
+                        console.log(rs);
+                        if (rs.success) {
+                            console.log(rs.message);
+                            window.location.reload();
+                        } else {
+                            console.log("Fail");
+                        }
+                    }
+                });
+            }
+        });
+
+
+        function Browsever(field) {
+            var finder = $('<div />').dialogelfinder({
+                url: '/el-finder-file-system/connector',
+                baseUrl: "/lib/elfinder/",
+                lang: 'vi',
+                width: 840,
+                height: 450,
+                destroyOnClose: true,
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                },
+                getFileCallback: function (file) {
+                    var fileUrl = file.url;
+                    addImageProduct(@Model.ProductId, fileUrl);
+                }
+            }).dialogelfinder('instance');
+        }
+
+        function addImageProduct(id, url) {
+            $.ajax({
+                
+
+                type: 'POST',
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                url: '/Admin/ProductImages/Index?handler=AddImage',
+                data: { id: id, url: url },
+
+                success: function (rs) {
+                    console.log(rs);
+                    if (rs.success) {
+                        console.log("Good");
+                        window.location.reload();
+                    } else {
+                        console.log("Fail");
+                    }
+                }
+
+            });
+        }
+
+
+
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

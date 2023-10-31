@@ -8,17 +8,17 @@ $(document).ready(function () {
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "25%" },
-            { "data": "description", "width": "15%" },
+            { "data": "name", "width": "15%" },
+            { "data": "description", "width": "35%" },
             {
                 "data": "icon",
                 "render": function (data, type, row) {
                     if (type === 'display') {
-                        return `<img src="${data}" alt="Category Icon" style="max-width: 50px; max-height: 50px;" />`;
+                        return `<img src="${data}" alt="Category Icon" style="width: 100px;height: 100px;" />`;
                     }
                     return data; // Trả về URL hình ảnh cho các mục dữ liệu khác
                 },
-                "width": "15%"
+                "width": "25%"
             },
             {
                 "data": "id",
