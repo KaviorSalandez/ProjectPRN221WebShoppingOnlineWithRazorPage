@@ -113,7 +113,7 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val());
                     },
                     url: '/Admin/ProductImages/Index?handler=ChangeImageDefault',
-                    data: { id: id },
+                    data: { id: id,pid: @Model.ProductId },
                     success: function (rs) {
                         console.log(rs);
                         if (rs.success) {

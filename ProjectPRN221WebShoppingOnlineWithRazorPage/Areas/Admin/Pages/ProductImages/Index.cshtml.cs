@@ -23,12 +23,12 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
         public int ProductId { get; set; }
         public IActionResult OnGet(int? id)
         {
-            if(id != null)
+            if (id != null)
             {
                 ProductId = (int)id;
             }
             ListProduct = _context.ProductImages.Where(x => x.ProductId == id).ToList();
-            
+
             return Page();
         }
 
@@ -55,7 +55,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
         {
             try
             {
-                var item =  await _context.ProductImages.FindAsync(id);
+                var item = await _context.ProductImages.FindAsync(id);
                 _context.ProductImages.Remove(item);
                 await _context.SaveChangesAsync();
                 return new JsonResult(new { Success = true, Message = "Delete image successfully" });
@@ -70,21 +70,24 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
         //{
         //    return new JsonResult(new { Success = true, Message = "Image added successfully" });
         //}
-        public IActionResult OnPostChangeImageDefault(int id)
+        public IActionResult OnPostChangeImageDefault(int id, int pid)
         {
-                var listImage =  _context.ProductImages.ToList();
-                foreach (var img in listImage)
-                {
-                    img.IsDefault = false;
-                }
-                var item =  _context.ProductImages.Find(id);
-                if(item != null)
-                {
-                    item.IsDefault = true;
-                    item.ModifiedDate = DateTime.Now;
-                }
-                _context.SaveChanges();
-                return new JsonResult(new { Success = true, Message = "Change image default successfully" });
+            var listImage = _context.ProductImages.Where(x => x.ProductId == pid).ToList();
+            foreach (var img in listImage)
+            {
+                img.IsDefault = false;
+            }
+            _context.ProductImages.UpdateRange(listImage);
+            _context.SaveChanges();
+            var item = _context.ProductImages.Find(id);
+            if (item != null)
+            {
+                item.IsDefault = true;
+                item.ModifiedDate = DateTime.Now;
+            }
+            _context.ProductImages.Update(item);
+            _context.SaveChanges();
+            return new JsonResult(new { Success = true, Message = "Change image default successfully" });
         }
 
 
