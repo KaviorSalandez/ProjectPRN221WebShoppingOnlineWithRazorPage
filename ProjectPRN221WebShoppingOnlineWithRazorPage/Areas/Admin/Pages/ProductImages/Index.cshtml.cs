@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
@@ -56,9 +56,17 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
             try
             {
                 var item = await _context.ProductImages.FindAsync(id);
-                _context.ProductImages.Remove(item);
-                await _context.SaveChangesAsync();
-                return new JsonResult(new { Success = true, Message = "Delete image successfully" });
+                if (item != null && item.IsDefault == false)
+                {
+                    _context.ProductImages.Remove(item);
+                    await _context.SaveChangesAsync();
+                    return new JsonResult(new { Success = true, Message = "Delete image successfully" });
+                }
+                else
+                {
+                    return new JsonResult(new { Success = false, Message = "Dont delete default image" });
+
+                }
             }
             catch (Exception ex)
             {
@@ -86,6 +94,16 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
                 item.ModifiedDate = DateTime.Now;
             }
             _context.ProductImages.Update(item);
+
+
+            //cập nhật lại ảnh ở product
+            var productFromDb = _context.Products.FirstOrDefault(x => x.Id == pid);
+            if (productFromDb != null)
+            {
+                productFromDb.Image = item.Image;
+            }
+            _context.Products.Update(productFromDb);
+
             _context.SaveChanges();
             return new JsonResult(new { Success = true, Message = "Change image default successfully" });
         }

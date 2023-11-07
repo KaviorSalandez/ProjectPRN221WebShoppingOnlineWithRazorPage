@@ -27,16 +27,21 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
 
         public string? Image { get; set; }
         [DisplayName("Giá nhập")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
 
         public double? OriginalPrice { get; set; }
         [DisplayName("Giá bán")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
 
         public double? Price { get; set; }
         [DisplayName("Giá khi giảm")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
 
         public double? PriceSale { get; set; }
-        [DisplayName("Số lượng trong kho")]
 
+
+        [DisplayName("Số lượng trong kho")]
+        [Range(0, 100, ErrorMessage = "Số lượng phải từ 0-100")]
         public int Quantity { get; set; }
         public bool IsHome { get; set; }
         public bool IsSale { get; set; }
