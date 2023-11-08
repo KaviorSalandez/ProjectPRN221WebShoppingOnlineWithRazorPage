@@ -64,6 +64,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products
                         // ẢNH THÌ VẪN GIỮ NGUYÊN Ở ĐÂY VÌ MÌNH QUẢN LÍ ẢNH Ở CHỖ KHÁC
                         Product.Image = objectFromDb.Image;
                         Product.ModifiedDate = DateTime.Now;
+                        Product.CreatedDate = objectFromDb.CreatedDate;
                         _context.Products.Update(Product);
                         await _context.SaveChangesAsync();
                         StatusMessage = $"Cập nhật thành công";

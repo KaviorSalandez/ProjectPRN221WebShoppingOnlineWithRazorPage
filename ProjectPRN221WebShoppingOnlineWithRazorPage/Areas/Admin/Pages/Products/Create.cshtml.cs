@@ -75,6 +75,12 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products
             }
             else
             {
+                // get list cate
+                Categories = _context.Categories.Select(x => new SelectListItem
+                {
+                    Text = x.Name.ToString(),
+                    Value = x.Id.ToString()
+                }).ToList();
                 return Page();
             }
         }

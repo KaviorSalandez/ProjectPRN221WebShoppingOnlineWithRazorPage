@@ -35,7 +35,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
 
         public double? Price { get; set; }
         [DisplayName("Giá khi giảm")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be equal or greater than 0.")]
 
         public double? PriceSale { get; set; }
 
