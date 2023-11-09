@@ -16,7 +16,7 @@ $(document).ready(function () {
                 "render": function (data, type, row) {
                     if (type === 'display') {
                         var id = row.id;
-                        return `<img src="${data}" id="imgproduct" data-id="${id}" alt="Product Image" style="max-width: 50px; max-height: 50px;" />`;
+                        return `<img src="${data}" id="imgproduct" data-id="${id}" alt="Product Image" style="max-width: 90px; max-height: 90px;" />`;
                     }
                     return data;
                 },
@@ -28,7 +28,7 @@ $(document).ready(function () {
                 "data": "isActive",
                 "render": function (data) {
                     if (data === true) {
-                        return `<i class="bi bi-check-circle"></i>`;
+                        return `<i class="bi bi-check-circle text-success"></i>`;
                     } else {
                         return `<i class="bi bi-ban"></i>`;
                     }
