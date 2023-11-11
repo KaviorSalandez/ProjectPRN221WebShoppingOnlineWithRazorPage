@@ -73,7 +73,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddOptions();
 builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
-
+builder.Services.AddSession();
 
 
 
@@ -106,6 +106,7 @@ app.UseRouting();
 app.UseAuthentication();;
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapRazorPages();
 // để sử dụng API và lấy đến đúng route cần khai báo

@@ -1,0 +1,101 @@
+﻿@page "/user/register"
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Account.RegisterUserModel
+@{
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<div class="container product_section_container" style="margin-top:160px">
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form id="registerFormUser" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <p class="lead fw-normal mb-0 me-3">Register in with</p>
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="bi bi-facebook"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="bi bi-google"></i>
+                            </button>
+                        </div>
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                        </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="Input.UserName" class="form-control form-control-lg" autocomplete="on" aria-required="true"
+                                   placeholder="Enter a user name" />
+                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" asp-for="Input.Email" class="form-control form-control-lg" autocomplete="on" aria-required="true"
+                                   placeholder="Enter email address" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" asp-for="Input.Password" class="form-control form-control-lg" aria-required="true"
+                                   placeholder="Enter password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Confirm Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" asp-for="Input.ConfirmPassword" class="form-control form-control-lg" aria-required="true"
+                                   placeholder="Enter confirm password" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+                        </div>
+
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Checkbox -->
+                            <div class="form-check mb-0">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                                <label class="form-check-label" for="form2Example3">
+                                    By creating an account, you agree the terms and conditions
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="text-left text-lg-start mt-4 pt-2">
+                            <button type="submit"  class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                                Register new account
+                            </button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0" style="font:bold">
+                                I have an account? <a asp-page="/Account/LoginUser" asp-route-returnUrl="@Model.ReturnUrl"
+                                                          class="link-danger" style="color:green">Login</a>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartialUser" />
+}

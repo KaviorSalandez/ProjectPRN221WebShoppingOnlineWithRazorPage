@@ -74,10 +74,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.ProductI
             }
         }
 
-        //public async Task<IActionResult> OnPostFuck()   
-        //{
-        //    return new JsonResult(new { Success = true, Message = "Image added successfully" });
-        //}
+        
         public IActionResult OnPostChangeImageDefault(int id, int pid)
         {
             var listImage = _context.ProductImages.Where(x => x.ProductId == pid).ToList();

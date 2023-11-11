@@ -3,8 +3,223 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<link href="~/contentcustomer/assets/styles/categories_styles.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/styles/categories_responsive.css" rel="stylesheet" />
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="main_slider" style="background-image:url(https://brocanvas.com/wp-content/uploads/2022/02/Hinh-anh-con-thuyen-bang-hai-tac-mu-rom.jpg)">
+    <div class="container fill_height">
+        <div class="row align-items-center fill_height">
+            <div class="col">
+                <div class="main_slider_content">
+                    <h6 style="color:white">FPT / FALL 2023</h6>
+                    <h1 style="color:white">Get up to 30% Off New Arrivals</h1>
+                    <div class="red_button shop_now_button"><a href="/Shops">shop now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model.Categories)
+            {
+                <div class="col-md-3">
+                    @{
+                        var imagePath = item.Icon;
+                        int lastBackslashIndex = imagePath.LastIndexOf('\\');
+                        if (lastBackslashIndex >= 0 && lastBackslashIndex < imagePath.Length - 1)
+                        {
+                            // Adding 1 to exclude the backslash itself
+                            imagePath=  imagePath.Substring(lastBackslashIndex + 1);
+                            
+                        }
+                    }
+                    <div class="banner_item align-items-center" style="background-image:url('/images/category/@imagePath')">
+                        <div class="banner_category">
+                            <a href="/Shops/Index?cid=@item.Id">@item.Name</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<div class="new_arrivals">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title new_arrivals_title">
+                    <h2>Feature Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col text-center">
+                <div class="new_arrivals_sorting">
+                    <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
+
+                        @foreach (var item in Model.Categories)
+                        {
+                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".@item.Name">@item.Name</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+                    @foreach (var item in Model.ProductInFeatures)
+                    {
+
+                        <!-- Product 1 -->
+                        var strImage = "";
+                        var img = item.ProductImages.FirstOrDefault(x => x.IsDefault);
+                        if (img != null)
+                        {
+                            strImage = img.Image;
+                        }
+                        <div class="product-item @item.Category.Name">
+                            <div class="product discount product_filter">
+                                <div class="product_image">
+                                    <img height="250px" src="@strImage" alt="@item.Title">
+                                </div>
+                                <div class="favorite favorite_left"></div>
+                                <div class="product_info">
+                                    <h7 class="product_name"><a asp-page="Products/Detail" asp-route-id="@item.Id">@item.Title</a></h7>
+                                    @if (item.PriceSale > 0)
+                                    {
+                                        <div class="product_price">@Helper.Common.FormatNumber(item.PriceSale,0)<span>@Helper.Common.FormatNumber(item.Price,0)</span></div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="product_price">@Helper.Common.FormatNumber(item.Price,0)</div>
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.Id">add to cart</a></div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Deal of the week -->
+
+<div class="deal_ofthe_week">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="deal_ofthe_week_img">
+                    <img width="100%" src="https://i.bloganchoi.com/bloganchoi.com/wp-content/uploads/2017/03/naruto-uzumaki-696x696.jpg?fit=700%2C20000&quality=95&ssl=1" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 text-right deal_ofthe_week_col">
+                <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
+                    <div class="section_title">
+                        <h2>Deal Of The Week</h2>
+                    </div>
+                    <ul class="timer">
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="day" class="timer_num">03</div>
+                            <div class="timer_unit">Day</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="hour" class="timer_num">15</div>
+                            <div class="timer_unit">Hours</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="minute" class="timer_num">45</div>
+                            <div class="timer_unit">Mins</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="second" class="timer_num">23</div>
+                            <div class="timer_unit">Sec</div>
+                        </li>
+                    </ul>
+                    <div class="red_button deal_ofthe_week_button"><a href="/Shops">shop now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="best_sellers">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title new_arrivals_title">
+                    <h2>Best Seller</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="product_slider_container">
+                    <div class="owl-carousel owl-theme product_slider">
+                        @foreach (var item in Model.ProductInFeatures)
+                        {
+
+                            <div class="owl-item product_slider_item">
+                                <div class="product-item">
+                                    <div class="product discount product_filter">
+                                        <div class="product_image">
+                                            <img height="200px" src="@item.ProductImages.FirstOrDefault(x=>x.IsDefault).Image" alt="">
+                                        </div>
+                                        <div class="favorite favorite_left"></div>
+                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
+                                        <div class="product_info">
+                                            <h7 class="product_name"><a asp-page="Products/Detail" asp-route-id="@item.Id">@item.Title</a></h7>
+                                            @if (item.PriceSale > 0)
+                                            {
+
+
+                                                <div class="product_price">@Helper.Common.FormatNumber(item.PriceSale,0)<span>@Helper.Common.FormatNumber(item.Price,0)</span></div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="product_price">@Helper.Common.FormatNumber(item.Price,0)</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Slider Navigation -->
+
+                    <div class="product_slider_nav_left product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="product_slider_nav_right product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/contentcustomer/assets/js/categories_custom.js"></script>
+}
+

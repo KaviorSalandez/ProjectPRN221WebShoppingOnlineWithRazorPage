@@ -1,0 +1,242 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Shops.IndexModel
+@{
+}
+<link href="~/contentcustomer/assets/styles/bootstrap4/bootstrap.min.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/plugins/owlcarousel2-2.2.1/owl.carousel.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/plugins/owlcarousel2-2.2.1/owl.theme.default.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/plugins/owlcarousel2-2.2.1/animate.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/styles/categories_styles.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/styles/categories_responsive.css" rel="stylesheet" />
+<style>
+    input[name="stringSearch"] {
+        width: 100%; /* Adjust the width as needed */
+        padding: 10px; /* Adjust the padding as needed */
+        margin-bottom: 10px; /* Adjust the margin as needed */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        border: 1px solid #ccc; /* Add a border with a color of your choice */
+        border-radius: 4px; /* Optional: Add rounded corners */
+    }
+
+    .results_and_pagination {
+        display: flex;
+        justify-content: space-between; /* Adjust as needed, you can also use other values like space-around or space-evenly */
+        align-items: center; /* Align items vertically in the center */
+    }
+</style>
+
+
+<div class="container product_section_container">
+    <div class="row">
+        <div class="col product_section clearfix" style="margin-top:20px">
+            <!-- Sidebar -->
+
+            <div class="sidebar">
+                <div class="sidebar_section" style="padding-bottom:0px !important">
+                    <div class="sidebar_title">
+                        <h5>Danh mục sản phẩm</h5>
+                    </div>
+
+
+                    @*  Hiện thị các danh mục sản phẩm *@
+                    @if (Model.Categories != null && Model.Categories.Any())
+                    {
+                        <ul class="sidebar_categories">
+                            @foreach (var item in Model.Categories)
+                            {
+                                if (Model.CategoryIdSelected == item.Id)
+                                {
+                                    <li class="active"><a asp-page="./Index" asp-route-cid="@item.Id"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>@item.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-page="./Index" asp-route-cid="@item.Id">@item.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    }
+
+
+
+                </div>
+
+                <!-- Price Range Filtering -->
+                <div class="sidebar_section">
+                    <div class="sidebar_title">
+                        <h5>Filter by Price</h5>
+                    </div>
+                    <p>
+                        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        <input type="hidden" id="FromAmount" />
+                        <input type="hidden" id="ToAmount" />
+                    </p>
+                    <div id="slider-range"></div>
+                    <div class="filter_button"><span>filter</span></div>
+
+                </div>
+
+                <!-- Search by title of Product -->
+                <div class="sidebar_section">
+                    <form asp-page="./Index" id="searchForm" method="get">
+                        <div class="sidebar_title">
+                            <h5>Search by Name</h5>
+                        </div>
+                        <p>
+                            <input name="searchString" type="text" asp-for="@Model.CurrentFilter"/>
+                            <input type="hidden" name="cid" value="@Model.CategoryIdSelected"/>
+                        </p>
+                        <div class="filter_button" onclick="submitForm()"><span>Search</span></div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Main Content -->
+
+            <div class="main_content">
+
+                <!-- Products -->
+
+                <div class="products_iso">
+                    <div class="row">
+                        <div class="col">
+
+                            <!-- Product Sorting -->
+
+                            <div class="product_sorting_container product_sorting_container_top">
+                                <ul class="product_sorting">
+                                    <li>
+                                        <span class="type_sorting_text">Default Sorting</span>
+                                        <i class="fa fa-angle-down"></i>
+                                        <ul class="sorting_type">
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default Sorting</span></li>
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price</span></li>
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Product Name</span></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Product Grid -->
+
+                            <div class="product-grid">
+
+                                <!-- Product 1 -->
+                                @if (Model.Products != null && Model.Products.Any())
+                                {
+                                    foreach (var item in Model.Products)
+                                    {
+                                        var strImage = "";
+                                        var img = item.ProductImages.FirstOrDefault(x => x.IsDefault);
+                                        if (img != null)
+                                        {
+                                            strImage = img.Image;
+                                        }
+                                        <div class="product-item men">
+                                            <div class="product discount product_filter">
+                                                <div class="product_image">
+                                                    <img style="height:200px" src="@strImage" alt="">
+                                                </div>
+                                                <div class="favorite favorite_left"></div>
+                                                <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+                                                <div class="product_info">
+                                                    <h6 class="product_name"><a asp-page="/Products/Detail" asp-route-id="@item.Id">@item.Title</a></h6>
+                                                    @if (item.PriceSale > 0)
+                                                    {
+                                                        <div class="product_price">@Helper.Common.FormatNumber(item.PriceSale,0)<span>@Helper.Common.FormatNumber(item.Price,0)</span></div>
+                                                        <div style="display:none" class="input_product_price">@item.PriceSale</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="product_price">@Helper.Common.FormatNumber(item.Price,0)</div>
+                                                        <div style="display:none" class="input_product_price">@item.Price</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.Id">add to cart</a></div>
+                                        </div>
+                                    }
+                                }
+                                @{
+                                    var pagingmodel = new Helper.PagingModel()
+                                    {
+                                        currentpage = Model.currentPage,
+                                        countpages = Model.countPages,
+                                        generateUrl = (int? p) => Url.Page("/Shops/Index", new { p = p, cid = Model.CategoryIdSelected, searchString = Model.CurrentFilter })
+                                    };
+                                }
+                            </div>
+                            <!-- Product Sorting -->
+                            <div class="product_sorting_container product_sorting_container_bottom clearfix">
+                                <div class="results_and_pagination">
+                                    <span class="showing_results">Showing 1–3 of 12 results</span>
+                                    <partial name="_Paging" model="@pagingmodel"></partial>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="benefit">
+    <div class="container">
+        <div class="row benefit_row">
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>free shipping</h6>
+                        <p>Suffered Alteration in Some Form</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>cach on delivery</h6>
+                        <p>The Internet Tend To Repeat</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>45 days return</h6>
+                        <p>Making it Look Like Readable</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>opening all week</h6>
+                        <p>8AM - 09PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/contentcustomer/assets/js/categories_custom.js"></script>
+    <script>
+        function submitForm() {
+            document.getElementById("searchForm").submit();
+        }
+    </script>     
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

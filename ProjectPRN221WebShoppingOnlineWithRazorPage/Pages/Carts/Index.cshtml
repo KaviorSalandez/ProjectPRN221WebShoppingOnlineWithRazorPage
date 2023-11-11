@@ -1,0 +1,144 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Carts.IndexModel
+@{
+}
+<link href="~/contentcustomer/assets/styles/categories_styles.css" rel="stylesheet" />
+<link href="~/contentcustomer/assets/styles/categories_responsive.css" rel="stylesheet" />
+
+
+
+
+
+@Html.AntiForgeryToken()
+
+<div class="container product_section_container" style="min-height:400px">
+    <div class="row">
+        
+        <hr/>
+
+    </div>
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-md-12" id="load_data">
+            <table class="table table-bordered table-striped">
+                <tr class="text-center">
+                    <th>STT</th>
+                    <th>Ảnh sản phẩm</th>
+                    <th width="150px">Tên sản phẩm</th>
+                    <th>Tên danh mục</th>
+                    <th>Giá </th>
+                    <th width="120px">Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>
+                        Thao tác
+                    </th>
+                </tr>
+                @if (Model.Cart!=null && Model.Cart.Items != null && Model.Cart.Items.Any())
+                {
+                    var i = 1;
+                    var tongTien = decimal.Zero;
+                    foreach (var item in Model.Cart.Items)
+                    {
+                        tongTien += item.PriceTotal;
+                        <tr class="text-center" id="trow_@item.ProductId">
+                            <td>@(i++)</td>
+                            <td><img src="@item.ImageOfProduct" height="100px" width="100px" /></td>
+                            <td width="150px"><a href="Products/Detail?id=@item.ProductId">@item.ProductName</a></td>
+                            <td>@item.CategoryName</td>
+                            <td>@Helper.Common.FormatNumber(item.Price, 0)</td>
+                            <td width="120px">
+                                <input type="number" min="1" value="@item.Quantity" style="text-align:center" class="form-control" id="Quantity_@item.ProductId" />
+                            </td>
+                            <td>@Helper.Common.FormatNumber(item.PriceTotal, 0)</td>
+                            <td style="text-align:center">
+                                <a href="#" class="btn btn-sm btn-danger btnDeleteItem" data-id="@item.ProductId">
+                                    Xóa
+                                </a>
+                                <a href="#" class="btn btn-sm btn-info btnUpdateItem" data-id="@item.ProductId">
+                                    Cập nhật
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="6" class="text-right" style="font-weight:bold">Tổng tiền:</td>
+                        <td class="text-center" style="font-weight:bold">@Helper.Common.FormatNumber(tongTien, 0)</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="7" class="text-right"></td>
+                        <td style="text-align:center">
+                            <a href="#" class="btn btn-sm btn-danger btnDeleteAllItem">Xóa giỏ hàng</a>
+                            <a href="/thanh-toan" class="btn btn-sm btn-success">Thanh toán</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="text-center">
+                        <th colspan="7">Không có sản phẩm nào trong giỏ hàng</th>
+                    </tr>
+                }
+            </table>
+
+
+        </div>
+      
+    </div>
+
+</div>
+
+<!-- Benefit -->
+
+<div class="benefit">
+    <div class="container">
+        <div class="row benefit_row">
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>free shipping</h6>
+                        <p>Suffered Alteration in Some Form</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>cach on delivery</h6>
+                        <p>The Internet Tend To Repeat</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>45 days return</h6>
+                        <p>Making it Look Like Readable</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>opening all week</h6>
+                        <p>8AM - 09PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/contentcustomer/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/contentcustomer/assets/js/categories_custom.js"></script>
+}
+
+
+
