@@ -58,7 +58,6 @@
     <Folder Include="Uploads\" />
     <Folder Include="wwwroot\assets\images\" />
     <Folder Include="wwwroot\ContentCustomer\assets\" />
-    <Folder Include="wwwroot\images\category\" />
     <Folder Include="wwwroot\images\users\" />
   </ItemGroup>
 

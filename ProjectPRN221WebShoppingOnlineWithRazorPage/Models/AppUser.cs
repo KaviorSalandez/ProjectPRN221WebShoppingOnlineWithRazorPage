@@ -8,6 +8,10 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
     // tạm thời ở đây cta ko cho propety nào
     public class AppUser : IdentityUser
     {
+        public AppUser()
+        {
+            Orders = new HashSet<Order>();
+        }
         [Column(TypeName = "nvarchar")]
         [StringLength(500)]
         public string? HomeAddress { get; set; }
@@ -16,5 +20,8 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
         public DateTime? BirthDate { get; set; }
 
         public string? Avatar { get;set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
 }

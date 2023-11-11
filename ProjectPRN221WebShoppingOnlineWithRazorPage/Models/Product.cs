@@ -8,7 +8,10 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
     {
         public Product()
         {
-            ProductImages  = new HashSet<ProductImage>();
+            this.ProductImages  = new HashSet<ProductImage>();
+            this.OrderDetails = new HashSet<OrderDetail>();
+
+
         }
         [Key]
         public int Id { get; set; }
@@ -57,6 +60,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
 
         public virtual ICollection<ProductImage> ProductImages { get; set; }
 
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
 
 

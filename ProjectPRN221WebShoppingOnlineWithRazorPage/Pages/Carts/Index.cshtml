@@ -1,7 +1,11 @@
 ﻿@page
 @model ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Carts.IndexModel
-@{
-}
+
+@using Microsoft.AspNetCore.Identity;
+@using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
 <link href="~/contentcustomer/assets/styles/categories_styles.css" rel="stylesheet" />
 <link href="~/contentcustomer/assets/styles/categories_responsive.css" rel="stylesheet" />
 
@@ -71,7 +75,14 @@
                         <td colspan="7" class="text-right"></td>
                         <td style="text-align:center">
                             <a href="#" class="btn btn-sm btn-danger btnDeleteAllItem">Xóa giỏ hàng</a>
-                            <a href="/thanh-toan" class="btn btn-sm btn-success">Thanh toán</a>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a href="/Checkouts" class="btn btn-sm btn-success btn-checkout">Thanh toán</a>
+                            }else
+                            {
+                                <a href="/user/login" class="btn btn-sm btn-success btn-checkout">Thanh toán</a>
+                            }
+
                         </td>
                     </tr>
                 }
