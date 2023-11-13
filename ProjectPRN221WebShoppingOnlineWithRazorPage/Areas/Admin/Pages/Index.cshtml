@@ -271,34 +271,33 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-right">
-                        <select class="custom-select">
-                            <option selected>Today</option>
-                            <option value="1">Weekly</option>
-                            <option value="2">Monthly</option>
-                            <option value="3">Yearly</option>
-                        </select>
+                        <label for="fromDate">From:</label>
+                        <input type="text" id="fromDate" class="custom-input" placeholder="dd/MM/yyyy">
+
+                        <label for="toDate">To:</label>
+                        <input type="text" id="toDate" class="custom-input" placeholder="dd/MM/yyyy">
+
+                        <button id="searchButton">Search</button>
                     </div>
                     <h5 class="mb-0"> Product Revenue</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="chartjs_balance_bar"></canvas>
-
-                   @*  <div class="ct-chart-product ct-golden-section"></div> *@
-</div>
+                </div>
             </div>
         </div>
         <!-- ============================================================== -->
         <!-- end product sales  -->
         <!-- ============================================================== -->
         <div class="col-xl-3 col-lg-12 col-md-6 col-sm-12 col-12">
-          
+
             <div class="card">
                 <h5 class="card-header">Product Per Category</h5>
                 <div class="card-body">
                     <div id="account" style="height: 300px;"></div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 

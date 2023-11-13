@@ -43,6 +43,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
             if (!string.IsNullOrEmpty(toDate))
             {
                 DateTime endDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", null);
+                endDate = endDate.AddDays(1);
                 query = query.Where(x => x.CreatedDate <= endDate);
             }
 

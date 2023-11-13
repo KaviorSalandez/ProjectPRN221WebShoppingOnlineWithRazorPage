@@ -5,90 +5,199 @@
     var arrDoanhThu = [];
     var arrLoiNhuan = [];
     var arrDate = [];
-    $.ajax({
-        url: 'api/ThongKe',
-        method: 'GET',
-        data: { fromDate: '', toDate: '' },
-        success: function (data) {
-            debugger;
-            if (data.success) {
-                for (var i = 0; i < data.dataThongKeTheoNgay.length; i++) {
-                    arrDate.push(data.dataThongKeTheoNgay[i].date);
-                    arrDoanhThu.push(data.dataThongKeTheoNgay[i].doanhThu);
-                    arrLoiNhuan.push(data.dataThongKeTheoNgay[i].loiNhuan);
-                }
-                console.log(arrDate);
-                console.log(arrDoanhThu);
-                console.log(arrLoiNhuan);
-            }
-            var ctx = document.getElementById("chartjs_balance_bar").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
+    //$.ajax({
+    //    url: 'api/ThongKe',
+    //    method: 'GET',
+    //    data: { fromDate: '', toDate: '' },
+    //    success: function (data) {
+    //        debugger;
+    //        if (data.success) {
+    //            for (var i = 0; i < data.dataThongKeTheoNgay.length; i++) {
+    //                arrDate.push(data.dataThongKeTheoNgay[i].date);
+    //                arrDoanhThu.push(data.dataThongKeTheoNgay[i].doanhThu);
+    //                arrLoiNhuan.push(data.dataThongKeTheoNgay[i].loiNhuan);
+    //            }
+    //            console.log(arrDate);
+    //            console.log(arrDoanhThu);
+    //            console.log(arrLoiNhuan);
+    //        }
+    //        var ctx = document.getElementById("chartjs_balance_bar").getContext('2d');
+    //        var myChart = new Chart(ctx, {
+    //            type: 'bar',
 
 
-                data: {
-                    labels: arrDate,
-                    datasets: [{
-                        label: 'Doanh thu',
-                        data: arrDoanhThu,
-                        backgroundColor: "rgba(89, 105, 255,.8)",
-                        borderColor: "rgba(89, 105, 255,1)",
-                        borderWidth: 2
+    //            data: {
+    //                labels: arrDate,
+    //                datasets: [{
+    //                    label: 'Doanh thu',
+    //                    data: arrDoanhThu,
+    //                    backgroundColor: "rgba(89, 105, 255,.8)",
+    //                    borderColor: "rgba(89, 105, 255,1)",
+    //                    borderWidth: 2
 
-                    }, {
-                        label: 'Lợi nhuận',
-                        data: arrLoiNhuan,
-                        backgroundColor: "rgba(255, 64, 123,.8)",
-                        borderColor: "rgba(255, 64, 123,1)",
-                        borderWidth: 2
+    //                }, {
+    //                    label: 'Lợi nhuận',
+    //                    data: arrLoiNhuan,
+    //                    backgroundColor: "rgba(255, 64, 123,.8)",
+    //                    borderColor: "rgba(255, 64, 123,1)",
+    //                    borderWidth: 2
 
 
-                    }]
+    //                }]
 
-                },
-                options: {
-                    legend: {
-                        display: true,
+    //            },
+    //            options: {
+    //                legend: {
+    //                    display: true,
 
-                        position: 'bottom',
+    //                    position: 'bottom',
 
-                        labels: {
-                            fontColor: '#71748d',
-                            fontFamily: 'Circular Std Book',
-                            fontSize: 14,
-                        }
-                    },
+    //                    labels: {
+    //                        fontColor: '#71748d',
+    //                        fontFamily: 'Circular Std Book',
+    //                        fontSize: 14,
+    //                    }
+    //                },
 
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                fontSize: 14,
-                                fontFamily: 'Circular Std Book',
-                                fontColor: '#71748d',
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                fontSize: 14,
-                                fontFamily: 'Circular Std Book',
-                                fontColor: '#71748d',
-                            }
-                        }]
-                    }
-                }
+    //                scales: {
+    //                    xAxes: [{
+    //                        ticks: {
+    //                            fontSize: 14,
+    //                            fontFamily: 'Circular Std Book',
+    //                            fontColor: '#71748d',
+    //                        }
+    //                    }],
+    //                    yAxes: [{
+    //                        ticks: {
+    //                            fontSize: 14,
+    //                            fontFamily: 'Circular Std Book',
+    //                            fontColor: '#71748d',
+    //                        }
+    //                    }]
+    //                }
+    //            }
 
-            });
-        },
-        error: function (err) {
-            console.error('Lỗi khi gọi Ajax:', err);
-        }
-    });
+    //        });
+    //    },
+    //    error: function (err) {
+    //        console.error('Lỗi khi gọi Ajax:', err);
+    //    }
+    //});
 
    
 
 });
 
+// Hàm gọi AJAX và vẽ biểu đồ khi trang được tải
+function loadInitialData() {
+    $.ajax({
+        url: 'api/ThongKe',
+        method: 'GET',
+        success: function (data) {
+            if (data.success) {
+                // Lấy dữ liệu từ kết quả trả về và vẽ biểu đồ
+                processDataAndDrawChart(data.dataThongKeTheoNgay);
+            }
+        },
+        error: function (err) {
+            console.error('Lỗi khi gọi Ajax:', err);
+        }
+    });
+}
 
+// Hàm xử lý dữ liệu và vẽ biểu đồ
+function processDataAndDrawChart(data) {
+    var arrDate = [];
+    var arrDoanhThu = [];
+    var arrLoiNhuan = [];
+
+    for (var i = 0; i < data.length; i++) {
+        arrDate.push(data[i].date);
+        arrDoanhThu.push(data[i].doanhThu);
+        arrLoiNhuan.push(data[i].loiNhuan);
+    }
+
+    var ctx = document.getElementById("chartjs_balance_bar").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: arrDate,
+            datasets: [{
+                label: 'Doanh thu',
+                data: arrDoanhThu,
+                backgroundColor: "rgba(89, 105, 255,.8)",
+                borderColor: "rgba(89, 105, 255,1)",
+                borderWidth: 2
+            }, {
+                label: 'Lợi nhuận',
+                data: arrLoiNhuan,
+                backgroundColor: "rgba(255, 64, 123,.8)",
+                borderColor: "rgba(255, 64, 123,1)",
+                borderWidth: 2
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+
+                position: 'bottom',
+
+                labels: {
+                    fontColor: '#71748d',
+                    fontFamily: 'Circular Std Book',
+                    fontSize: 14,
+                }
+            },
+
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 14,
+                        fontFamily: 'Circular Std Book',
+                        fontColor: '#71748d',
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontSize: 14,
+                        fontFamily: 'Circular Std Book',
+                        fontColor: '#71748d',
+                    }
+                }]
+            }
+        }
+    });
+}
+
+// Gọi hàm loadInitialData khi trang được tải
+$(document).ready(function () {
+    loadInitialData();
+});
+
+// Hàm gọi AJAX để lấy dữ liệu từ API và cập nhật biểu đồ
+function fetchDataAndDrawChart() {
+    // Lấy giá trị từ ô nhập ngày và gọi lại hàm AJAX
+    var fromDate = $("#fromDate").val();
+    var toDate = $("#toDate").val();
+
+    $.ajax({
+        url: 'api/ThongKe',
+        method: 'GET',
+        data: { fromDate: fromDate, toDate: toDate },
+        success: function (data) {
+            // Lấy dữ liệu từ kết quả trả về và vẽ lại biểu đồ
+            processDataAndDrawChart(data.dataThongKeTheoNgay);
+        },
+        error: function (err) {
+            console.error('Lỗi khi gọi Ajax:', err);
+        }
+    });
+}
+
+// Sự kiện click cho nút tìm kiếm
+$("#searchButton").click(function () {
+    fetchDataAndDrawChart();
+});
 
 // ============================================================== 
 // Product Per Category

@@ -26,7 +26,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _context.Categories.ToList();
+            var list = _context.Categories.Where(x=> (bool)x.IsActive).ToList();
             return Json(new { data = list });
         }
         //xóa cate thì xóa luôn ảnh của nó trong wwwroot
@@ -35,13 +35,11 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
         {
             var objFromDb = _context.Categories.FirstOrDefault(c => c.Id == id);
 
-            var oldImagePath = Path.Combine(_environment.WebRootPath, objFromDb.Icon.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
+            if(objFromDb != null)
             {
-                System.IO.File.Delete(oldImagePath);
+                objFromDb.IsActive = false;
+                _context.Categories.Update(objFromDb);
             }
-
-            _context.Categories.Remove(objFromDb);
             await _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete success." });
         }

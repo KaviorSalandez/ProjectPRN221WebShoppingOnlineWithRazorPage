@@ -22,7 +22,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Pages
 
         public async Task OnGet()
         {
-            Categories = await _context.Categories.ToListAsync();
+            Categories = await _context.Categories.Where(x=> (bool)x.IsActive).ToListAsync();
             ProductInFeatures  = await _context.Products.Where(x=>x.IsActive && x.IsFeature==true).Include(x=>x.Category).Include(x=>x.ProductImages).Take(16).ToListAsync();
             ProductInSales  = await _context.Products.Where(x => x.IsActive && x.IsSale == true).Include(x => x.Category).Include(x => x.ProductImages).Take(10).ToListAsync();
         }
