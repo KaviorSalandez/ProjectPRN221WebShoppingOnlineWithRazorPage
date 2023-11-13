@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.User
 {
+    [Authorize(Roles = "Admin")]
     public class AddRoleModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;

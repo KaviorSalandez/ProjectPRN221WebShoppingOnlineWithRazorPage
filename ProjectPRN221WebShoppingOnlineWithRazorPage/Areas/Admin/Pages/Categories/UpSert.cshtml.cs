@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
@@ -6,6 +7,8 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Categories
 {
     [BindProperties]
+    [Authorize(Roles = "Admin,Employee")]
+
     public class UpSertModel : PageModel
     {
         private readonly IWebHostEnvironment _environment;

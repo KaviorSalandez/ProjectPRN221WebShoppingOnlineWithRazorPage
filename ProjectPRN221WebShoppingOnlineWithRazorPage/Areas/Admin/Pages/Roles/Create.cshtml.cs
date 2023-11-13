@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CreateModel : RolePageModel
     {
         public CreateModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)

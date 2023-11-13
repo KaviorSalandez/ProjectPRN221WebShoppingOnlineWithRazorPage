@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,8 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Orders
 {
+    [Authorize(Roles = "Admin,Employee")]
+
     [BindProperties]
 
     public class DetailModel : PageModel

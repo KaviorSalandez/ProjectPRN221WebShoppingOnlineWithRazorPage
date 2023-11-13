@@ -7,7 +7,7 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : RolePageModel
     {
         

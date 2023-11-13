@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles
 {
-    //[Authorize(Roles = "Admin,Editor")]
+    [Authorize(Roles = "Admin")]
     public class IndexModel : RolePageModel
     {
         public IndexModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Roles
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EditModel : RolePageModel
     {
         public EditModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)

@@ -7,7 +7,7 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Users
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;

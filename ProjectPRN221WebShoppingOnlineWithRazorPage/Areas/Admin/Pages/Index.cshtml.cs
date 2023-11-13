@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
@@ -6,6 +7,8 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages
 {
     [BindProperties]
+    [Authorize(Roles = "Admin,Employee")]
+
     public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
@@ -41,7 +44,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages
             CountUserActive = await _context.Users.CountAsync();
             CountCategoryActive = await _context.Categories.Where(x => (bool)x.IsActive).CountAsync();
             CountOrderCompleted = await _context.Orders.Where(x=>x.Status.Equals(Helper.SD.StatusCompleted)).CountAsync();
-            recentOrders = await _context.Orders.OrderByDescending(x => x.Id).Take(6).ToListAsync();
+            recentOrders = await _context.Orders.OrderByDescending(x => x.Id).Take(5).ToListAsync();
 
             productInTop3Sales = _context.OrderDetails.GroupBy(od => od.Name).Select(x => new ProductInTop3Sale
             {

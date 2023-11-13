@@ -6,7 +6,8 @@ using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Products
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Employee")]
+
     [BindProperties]
     public class CreateModel : PageModel
     {
