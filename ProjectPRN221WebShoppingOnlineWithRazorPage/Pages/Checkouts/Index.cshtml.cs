@@ -49,7 +49,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Checkouts
             {
                 Cart = SessionHelper.GetObjectFromJson<ShoppingCart>(_httpContextAccessor.HttpContext.Session, "cart");
                 // tổng số mặt hàng có trong đơn hàng
-                int quantity = Cart.Items.Count();
+                // int quantity = Cart.Items.Count();
                 if (Cart.Items != null && Cart.Items.Any())
                 {
                     Order order = new Order();
@@ -73,18 +73,18 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Pages.Checkouts
                     order.OrderTotal = (double)Cart.GetPriceTotal();
                     order.Status = Helper.SD.StatusCompleted;
                     _context.Add(order);
-                    _context.SaveChanges();
 
                     // giảm số lượng sản phẩm sau khi đặt hàng
-                    //foreach (var item in listItemInCart)
-                    //{
-                    //    var p = _northWindContext.Products.Find(item.ProductItem.ProductId);
-                    //    if (p != null)
-                    //    {
-                    //        p.UnitsInStock = (short?)(p.UnitsInStock - item.Quantity);
-                    //    }
-                    //}
-                    //_northWindContext.SaveChanges();
+                    foreach (var item in Cart.Items)
+                    {
+                        var p = _context.Products.Find(item.ProductId);
+                        if (p != null)
+                        {
+                            p.Quantity -= item.Quantity;
+                            _context.Products.Update(p);
+                        }
+                    }
+                    _context.SaveChanges();
 
 
                     // xóa giỏ hàng hiện tại

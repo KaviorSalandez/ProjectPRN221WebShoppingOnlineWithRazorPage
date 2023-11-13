@@ -51,7 +51,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
                 SessionId = x.SessionId,
                 PaymentIntentId = x.PaymentIntentId,
                 CustomerName = x.AppUser.UserName
-            }).ToListAsync();
+            }).OrderByDescending(x=>x.Id).ToListAsync();
 
             return Json(new { data = list });
         }

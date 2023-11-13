@@ -1,63 +1,90 @@
 ﻿$(function () {
     "use strict";
 
-    var ctx = document.getElementById("chartjs_balance_bar").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-
-
-        data: {
-            labels: ["Current", "1-30", "31-60", "61-90", "91+"],
-            datasets: [{
-                label: 'Doanh thu',
-                data: [500, 1000, 1500, 3700, 2500],
-                backgroundColor: "rgba(89, 105, 255,.8)",
-                borderColor: "rgba(89, 105, 255,1)",
-                borderWidth: 2
-
-            }, {
-                label: 'Lợi nhuận',
-                data: [1000, 1500, 2500, 3500, 2500],
-                backgroundColor: "rgba(255, 64, 123,.8)",
-                borderColor: "rgba(255, 64, 123,1)",
-                borderWidth: 2
-
-
-            }]
-
-        },
-        options: {
-            legend: {
-                display: true,
-
-                position: 'bottom',
-
-                labels: {
-                    fontColor: '#71748d',
-                    fontFamily: 'Circular Std Book',
-                    fontSize: 14,
+    // Hàm để gọi AJAX
+    var arrDoanhThu = [];
+    var arrLoiNhuan = [];
+    var arrDate = [];
+    $.ajax({
+        url: 'api/ThongKe',
+        method: 'GET',
+        data: { fromDate: '', toDate: '' },
+        success: function (data) {
+            debugger;
+            if (data.success) {
+                for (var i = 0; i < data.dataThongKeTheoNgay.length; i++) {
+                    arrDate.push(data.dataThongKeTheoNgay[i].date);
+                    arrDoanhThu.push(data.dataThongKeTheoNgay[i].doanhThu);
+                    arrLoiNhuan.push(data.dataThongKeTheoNgay[i].loiNhuan);
                 }
-            },
-
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontSize: 14,
-                        fontFamily: 'Circular Std Book',
-                        fontColor: '#71748d',
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        fontSize: 14,
-                        fontFamily: 'Circular Std Book',
-                        fontColor: '#71748d',
-                    }
-                }]
+                console.log(arrDate);
+                console.log(arrDoanhThu);
+                console.log(arrLoiNhuan);
             }
-        }
+            var ctx = document.getElementById("chartjs_balance_bar").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
 
+
+                data: {
+                    labels: arrDate,
+                    datasets: [{
+                        label: 'Doanh thu',
+                        data: arrDoanhThu,
+                        backgroundColor: "rgba(89, 105, 255,.8)",
+                        borderColor: "rgba(89, 105, 255,1)",
+                        borderWidth: 2
+
+                    }, {
+                        label: 'Lợi nhuận',
+                        data: arrLoiNhuan,
+                        backgroundColor: "rgba(255, 64, 123,.8)",
+                        borderColor: "rgba(255, 64, 123,1)",
+                        borderWidth: 2
+
+
+                    }]
+
+                },
+                options: {
+                    legend: {
+                        display: true,
+
+                        position: 'bottom',
+
+                        labels: {
+                            fontColor: '#71748d',
+                            fontFamily: 'Circular Std Book',
+                            fontSize: 14,
+                        }
+                    },
+
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontSize: 14,
+                                fontFamily: 'Circular Std Book',
+                                fontColor: '#71748d',
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                fontSize: 14,
+                                fontFamily: 'Circular Std Book',
+                                fontColor: '#71748d',
+                            }
+                        }]
+                    }
+                }
+
+            });
+        },
+        error: function (err) {
+            console.error('Lỗi khi gọi Ajax:', err);
+        }
     });
+
+   
 
 });
 
@@ -84,7 +111,6 @@ $.ajax({
     url: 'api/Category/GetProductPerCategory',
     method: 'GET',
     success: function (data) {
-        debugger;
         if (data.success) {
             // Xử lý dữ liệu từ máy chủ, ví dụ: data = { 'Cate1': 50, 'Cate2': 30, 'Cate3': 20 }
             // Cập nhật dữ liệu của biểu đồ

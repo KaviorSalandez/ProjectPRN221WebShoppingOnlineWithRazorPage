@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
+using System.Linq;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
 {
@@ -15,10 +18,51 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string fromDate, string toDate)
         {
-            var list = _context.Products.Where(x => x.IsActive).OrderByDescending(x => x.Id).ToList();
-            return Json(new { data = list });
+
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+
+                        select new
+                        {
+                            CreatedDate = o.CreatedDate,
+                            Quantity = od.Quantity,
+                            Price = od.Price,
+                            OriginalPrice = p.OriginalPrice,
+
+                        };
+
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                DateTime startDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", null);
+                query = query.Where(x => x.CreatedDate >= startDate);
+            }
+
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                DateTime endDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", null);
+                query = query.Where(x => x.CreatedDate <= endDate);
+            }
+
+
+            // truncatetime là bỏ thời gian đi chỉ lấy ngày tháng năm
+            var result = query.GroupBy(x => x.CreatedDate.Value.Date).Select(x => new
+            {
+                Date = x.Key,
+                Total_NhapVao = x.Sum(y => y.Quantity * y.OriginalPrice),
+                Total_BanRa = x.Sum(y => y.Quantity * y.Price)
+            }).Select(x => new
+            {
+                Date = x.Date.ToString("dd/MM/yyyy"),
+                DoanhThu = x.Total_BanRa,
+                LoiNhuan = x.Total_BanRa - x.Total_NhapVao
+            });
+
+
+            return Json(new { Success = true, dataThongKeTheoNgay = result });
+
         }
 
 
