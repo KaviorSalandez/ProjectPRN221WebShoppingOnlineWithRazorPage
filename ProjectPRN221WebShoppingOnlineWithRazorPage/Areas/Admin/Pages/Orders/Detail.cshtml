@@ -1,0 +1,114 @@
+﻿@page
+@model ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Orders.DetailModel
+@{
+}
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="text-primary">Chi tiết đơn hàng</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mã đơn hàng</label>
+                    <p class="form-control">@Model.Order.Code</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Họ tên khách hàng</label>
+                    <p class="form-control">@Model.Order.UserId</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tổng tiền</label>
+                    <p class="form-control">@Helper.Common.FormatNumber(Model.Order.OrderTotal,0)</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <p class="form-control">@Model.Order.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <p class="form-control">@Model.Order.Email</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Ngày đặt hàng</label>
+                    <p class="form-control">@Model.Order.CreatedDate?.ToString("dd//MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <p class="form-control">@Model.Order.Status</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Địa chỉ nhận hàng</label>
+                    <p class="form-control">@Model.Order.ShipAddress</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        @if(Model.Order.OrderDetails != null && Model.Order.OrderDetails.Count() > 0)
+        {
+            <hr />
+            <h3>Danh sách các sản phẩm trong đơn hàng</h3>
+            <table class="table table-bordered table-striped" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var cnt = 1;
+                    }
+                    @foreach (var item in Model.Order.OrderDetails)
+                    {
+                        <tr>
+                            <td>@(cnt++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@Helper.Common.FormatNumber(item.Price,0)</td>
+                            <td>@Helper.Common.FormatNumber(item.Quantity * item.Price,0)</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        }
+
+       
+    </div>
+</div>

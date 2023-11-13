@@ -18,6 +18,9 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Models
         [Required(ErrorMessage = "Icon của thể loại không được để trống")]
         public string? Icon { get; set; }
 
+        public bool? IsActive { get; set; }
+
+
         public virtual ICollection<Product> Products { get; set; }
 
     }

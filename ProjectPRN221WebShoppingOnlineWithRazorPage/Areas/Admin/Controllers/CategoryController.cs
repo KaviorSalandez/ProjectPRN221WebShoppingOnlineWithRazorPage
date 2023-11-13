@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProjectPRN221WebShoppingOnlineWithRazorPage.Models;
 
 namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
@@ -45,7 +46,16 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Controllers
             return Json(new { success = true, message = "Delete success." });
         }
 
-
+        [HttpGet("GetProductPerCategory")]
+        public async Task<IActionResult> GetProductPerCategory()
+        {
+            var listC = await _context.Categories.Where(x=> (bool)x.IsActive).Include(x => x.Products).Select(c => new
+            {
+                CategoryName = c.Name,
+                ProductCount = c.Products.Count()
+            }).ToListAsync();
+            return Json(new {Success= true,  listC = listC });
+        }
 
     }
 }

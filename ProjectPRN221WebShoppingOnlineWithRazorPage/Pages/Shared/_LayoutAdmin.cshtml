@@ -27,6 +27,7 @@
     <link href="~/lib/summernote/summernote-bs4.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/elfinder/css/elfinder.full.css" />
     <link rel="stylesheet" href="~/lib/elfinder/css/theme.min.css" />
+    <link href="~/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" />
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -196,45 +197,7 @@
                                 <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
-                                            <div id="submenu-1-2" class="collapse submenu" style="">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="index.html">E Commerce Dashboard</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product.html">Product List</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-finance.html">Finance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-sales.html">Sales</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Infulencer</a>
-                                            <div id="submenu-1-1" class="collapse submenu" style="">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="dashboard-influencer.html">Influencer</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="influencer-finder.html">Influencer Finder</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="influencer-profile.html">Influencer Profile</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <a class="nav-link" asp-area="Admin" asp-page="/Index">Thống kê</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -244,26 +207,30 @@
                                 <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-12" aria-controls="submenu-12"><i class="fas fa-list-alt"></i>Quản lí sản phẩm<span class="badge badge-success">6</span></a>
                                 <div id="submenu-12" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
-                                        
                                         <li class="nav-item">
                                             <a class="nav-link" asp-area="Admin" asp-page="/Products/Index">Sản phẩm</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" asp-area="Admin" asp-page="/Categories/Index">Danh mục</a>
                                         </li>
-                                       
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-15" aria-controls="submenu-15">
+                                    <i class=" fas fa-shipping-fast"></i>Quản lí đơn hàng<span class="badge badge-success">6</span>
+                                </a>
+                                <div id="submenu-15" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-sales.html">Đơn hàng</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-sales.html">Thống kê</a>
+                                            <a class="nav-link" asp-area="Admin" asp-page="/Orders/Index">Đơn hàng</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-13" aria-controls="submenu-13"><i class="fas fa-list-alt"></i>Quản lí người dùng<span class="badge badge-success">6</span></a>
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-13" aria-controls="submenu-13"><i class="fas fa-user"></i>Quản lí người dùng<span class="badge badge-success">6</span></a>
                                 <div id="submenu-13" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
 
@@ -345,16 +312,29 @@
     <script src="~/assets/libs/js/main-js.js"></script>
     <!-- chart chartist js -->
     <script src="~/assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
+    <script src="~/assets/vendor/charts/chartist-bundle/Chartistjs.js"></script>
+    <script src="~/assets/vendor/charts/chartist-bundle/chartist-plugin-threshold.js"></script>
+
     <!-- sparkline js -->
     <script src="~/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
     <!-- morris js -->
     <script src="~/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
     <script src="~/assets/vendor/charts/morris-bundle/morris.js"></script>
+    <script src="~/assets/vendor/charts/morris-bundle/morrisjs.html"></script>
+    <!-- gauge js -->
+    <script src="~/assets/vendor/gauge/gauge.min.js"></script>
     <!-- chart c3 js -->
     <script src="~/assets/vendor/charts/c3charts/c3.min.js"></script>
     <script src="~/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
     <script src="~/assets/vendor/charts/c3charts/C3chartjs.js"></script>
+    <!-- chartjs js -->
+    <script src="~/assets/vendor/charts/charts-bundle/Chart.bundle.js"></script>
+    <script src="~/assets/vendor/charts/charts-bundle/chartjs.js"></script>
+
+
+
     <script src="~/assets/libs/js/dashboard-ecommerce.js"></script>
+ 
 
 
     <script src="https://cdn.tiny.cloud/1/76gi9016qlfwmn8jiijfloc974a5ofre3p85pckmsmk0sj3y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -364,6 +344,8 @@
     <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
     <script src="~/lib/elfinder/js/elfinder.min.js"></script>
     <script src="~/lib/summernote/summernote-bs4.min.js"></script>
+
+    <!-- daterangepicker js -->
 
     @await RenderSectionAsync("Scripts", required: false)
 

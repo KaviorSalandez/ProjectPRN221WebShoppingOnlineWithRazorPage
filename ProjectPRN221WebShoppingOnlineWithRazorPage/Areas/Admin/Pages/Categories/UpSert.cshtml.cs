@@ -50,6 +50,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Categori
                 }
                 Category.Icon = @"\images\category\" + fileName_new + extension;
                 Category.CreatedDate = DateTime.Now;
+                Category.IsActive = true;
                 await _context.Categories.AddAsync(Category);
                 await _context.SaveChangesAsync();
                 StatusMessage = "Thêm mới sản phẩm thành công";
@@ -84,6 +85,7 @@ namespace ProjectPRN221WebShoppingOnlineWithRazorPage.Areas.Admin.Pages.Categori
                 {
                     Category.Icon = objFromDb.Icon;
                 }
+                Category.IsActive = objFromDb.IsActive;
                 Category.CreatedDate = objFromDb.CreatedDate;
                 Category.ModifiedDate = DateTime.Now;
                 _context.Categories.Update(Category);
